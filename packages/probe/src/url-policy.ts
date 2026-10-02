@@ -41,7 +41,8 @@ export async function validateMonitorTarget(input:string):Promise<TargetValidati
   try{url=new URL(input);}catch{return {ok:false,reason:"Target must be a valid absolute URL"};}
   if(url.protocol!=="https:"&&url.protocol!=="http:") return {ok:false,reason:"Only HTTP and HTTPS targets are allowed"};
   if(url.username||url.password) return {ok:false,reason:"Credentials embedded in target URLs are not allowed"};
-  const hostname=url.hostname.toLowerCase().replace(/\.$/,"");
+  const rawHostname=url.hostname.toLowerCase().replace(/\.$/,"");
+  const hostname=rawHostname.startsWith("[")&&rawHostname.endsWith("]")?rawHostname.slice(1,-1):rawHostname;
   if(!hostname||blockedHostnames.has(hostname)||hostname.endsWith(".localhost")||hostname.endsWith(".local")){
     return {ok:false,reason:"Local hostnames are not allowed"};
   }

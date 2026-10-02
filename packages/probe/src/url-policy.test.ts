@@ -24,7 +24,13 @@ describe("validateMonitorTarget",()=>{
   it("rejects localhost before DNS lookup",async()=>{
     await expect(validateMonitorTarget("http://localhost:8080")).resolves.toMatchObject({ok:false});
   });
-  it("rejects private IP literals",async()=>{
+  it("rejects private IPv4 literals",async()=>{
     await expect(validateMonitorTarget("http://192.168.1.1")).resolves.toMatchObject({ok:false});
+  });
+  it("rejects private IPv6 literals",async()=>{
+    await expect(validateMonitorTarget("http://[fd00::1]")).resolves.toMatchObject({ok:false});
+  });
+  it("accepts public IPv6 literals",async()=>{
+    await expect(validateMonitorTarget("https://[2606:4700:4700::1111]")).resolves.toMatchObject({ok:true});
   });
 });
