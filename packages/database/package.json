@@ -1,0 +1,7 @@
+{
+  "name":"@sentinel/database","version":"0.1.0","private":true,"type":"module",
+  "exports":{".":{"types":"./dist/index.d.ts","import":"./dist/index.js"}},
+  "scripts":{"build":"tsc -p tsconfig.json","lint":"tsc --noEmit -p tsconfig.json","db:generate":"prisma generate --schema prisma/schema.prisma","db:migrate":"prisma migrate dev --schema prisma/schema.prisma"},
+  "dependencies":{"@prisma/client":"^6.10.1"},
+  "devDependencies":{"prisma":"^6.10.1","typescript":"^5.8.3"}
+}
