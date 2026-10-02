@@ -1,12 +1,12 @@
 import {Worker,type Job} from "bullmq";
 import Redis from "ioredis";
+import {isValidMonitorCheckJob,type MonitorCheckJob} from "./job.js";
 
-interface MonitorCheckJob{monitorId:string;requestedAt:string;}
 const connection=new Redis(process.env.REDIS_URL??"redis://localhost:6379",{
   maxRetriesPerRequest:null,enableReadyCheck:true
 });
 const worker=new Worker<MonitorCheckJob>("monitor-checks",async(job:Job<MonitorCheckJob>)=>{
-  if(!job.data.monitorId||!job.data.requestedAt) throw new Error("Invalid monitor-check job payload");
+  if(!isValidMonitorCheckJob(job.data)) throw new Error("Invalid monitor-check job payload");
   // Fail closed until persistent lookup, SSRF-hardened transport, and result writer exist.
   throw new Error("Monitor check processor is not implemented yet");
 },{connection,concurrency:5});
