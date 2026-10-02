@@ -1,5 +1,5 @@
 import {Worker,type Job} from "bullmq";
-import Redis from "ioredis";
+import {Redis} from "ioredis";
 import {isValidMonitorCheckJob,type MonitorCheckJob} from "./job.js";
 
 const connection=new Redis(process.env.REDIS_URL??"redis://localhost:6379",{

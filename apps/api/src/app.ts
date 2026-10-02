@@ -1,6 +1,6 @@
 import Fastify,{type FastifyInstance} from "fastify";
 import helmet from "@fastify/helmet";
-import Redis from "ioredis";
+import {Redis} from "ioredis";
 import {prisma} from "@sentinel/database";
 import {env} from "./config/env.js";
 
